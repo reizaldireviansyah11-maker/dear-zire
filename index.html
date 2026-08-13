@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* === KUMPULAN CSS === */
+        :root {
+            --bg-dark: #0f0808; --burgundy: #4a0404; --rose: #b33951; 
+            --soft-pink: #f1c4cd; --cream: #fdf6f5; 
+            --glass-bg: rgba(30, 15, 15, 0.4); --glass-border: rgba(255, 255, 255, 0.08);
+            --font-serif: 'Playfair Display', serif; --font-sans: 'Poppins', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--cream); font-family: var(--font-sans); overflow-x: hidden; }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #2a0808 0%, var(--bg-dark) 100%); z-index: -2;
+        }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .container { width: 90%; max-width: 1000px; margin: 0 auto; }
+        .section-padding { padding: 80px 0; }
+        h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; letter-spacing: 1px; }
+        
+        .glass { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 15px; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37); }
+        .btn-premium { background: linear-gradient(135deg, var(--rose), var(--burgundy)); color: var(--cream); border: none; padding: 15px 35px; border-radius: 30px; font-family: var(--font-sans); font-size: 1rem; cursor: pointer; transition: all 0.3s ease; display: inline-block; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(179,57,81,0.6); }
+        
+        /* Opening */
+        #opening-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-dark); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1.5s ease; flex-direction: column;}
+        .opening-text { font-size: 2rem; color: var(--soft-pink); margin-bottom: 30px; text-align: center; }
+        
+        /* Nav */
+        .glass-nav { position: fixed; top: 0; width: 100%; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(15,8,8,0.6); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border); }
+        .nav-brand { font-family: var(--font-serif); font-size: 1.5rem; color: var(--soft-pink); font-style: italic; }
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; }
+        
+        /* Hero */
+        .hero-section { min-height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding-top: 60px; }
+        .hero-image-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; }
+        .glow-effect { position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background: var(--rose); opacity: 0.5; border-radius: 50%; filter: blur(20px); animation: pulse 3s infinite alternate; }
+        .hero-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid var(--soft-pink); position: relative; z-index: 1; }
+        .hero-title { font-size: 2.5rem; margin-bottom: 15px; }
+        .hero-title span { color: var(--soft-pink); font-style: italic; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--soft-pink); margin-bottom: 50px; }
+        
+        /* Letter */
+        .envelope-wrapper { position: relative; width: 300px; height: 200px; margin: 0 auto; cursor: pointer; }
+        .envelope { width: 100%; height: 100%; background: #8b1e32; border-radius: 5px; position: relative; transition: 0.4s; }
+        .flap { position: absolute; top: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #a3273e; transform-origin: top; transition: 0.6s; z-index: 3; }
+        .envelope-front { position: absolute; bottom: 0; border-left: 150px solid #942136; border-right: 150px solid #942136; border-bottom: 100px solid #7a1829; z-index: 2; }
+        .letter { position: absolute; top: 5px; left: 5px; width: 290px; height: 190px; background: var(--cream); z-index: 1; transition: 0.8s; overflow: hidden; border-radius: 5px;}
+        .letter-content { padding: 20px; color: #333; font-size: 0.9rem; line-height: 1.6; height: 100%; overflow-y: auto; text-align: left; }
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1;}
+        .envelope-wrapper.open .letter { transform: translateY(-100px); height: auto; min-height: 400px; z-index: 4; box-shadow: 0 5px 25px rgba(0,0,0,0.5);}
+        #typed-text { white-space: pre-wrap; }
+        
+        /* Why You */
+        .cards-container { display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; }
+        .why-card { padding: 25px; text-align: center; font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; }
+        
+        /* Timeline */
+        .timeline { position: relative; max-width: 600px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--glass-border); top: 0; bottom: 0; left: 50%; }
+        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        .timeline-content { padding: 20px; border-radius: 10px; }
+        
+        /* Counter */
+        .counter-box { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .time-item { background: var(--glass-bg); padding: 20px; border-radius: 10px; min-width: 100px; text-align: center; border: 1px solid var(--glass-border);}
+        .time-number { display: block; font-size: 2.5rem; font-family: var(--font-serif); color: var(--soft-pink); }
+        
+        /* Music Player */
+        .glass-player { position: fixed; bottom: 20px; right: 20px; background: var(--glass-bg); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; z-index: 1000; border: 1px solid var(--glass-border);}
+        #play-pause-btn { background: var(--rose); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+        .player-info { margin-left: 15px; font-size: 0.8rem; }
+        
+        /* Animations */
+        @keyframes pulse { from { opacity: 0.3; } to { opacity: 0.7; } }
+        .fade-in-scroll { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .fade-in-scroll.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; left: 0 !important; }
+            .glass-player { bottom: 10px; right: 10px; left: 10px; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Opening Screen -->
+    <div id="opening-screen">
+        <h1 class="opening-text">Untuk seseorang yang sangat berarti bagiku... ❤️</h1>
+        <button id="open-gift-btn" class="btn-premium">Buka hadiahku</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden">
+        
+        <!-- Navbar -->
+        <nav class="glass-nav">
+            <div class="nav-brand">Z & Me ❤️</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#letter">Letter</a></li>
+                <li><a href="#our-story">Our Story</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero -->
+        <header id="home" class="hero-section">
+            <div class="container fade-in-scroll">
+                <div class="hero-image-container">
+                    <div class="glow-effect"></div>
+                    <!-- Pastikan file foto pasangan.jpg ada di folder yang sama -->
+                    <img id="hero-img" src="pasangan.jpg" alt="Our Photo" class="hero-photo" onerror="this.src='https://via.placeholder.com/400x400/4a0404/f1c4cd?text=Foto+Kamu'">
+                </div>
+                <h1 class="hero-title">Untuk <span id="hero-name">Zire</span>,<br>yang selalu punya tempat istimewa di hatiku.</h1>
+                <p style="margin-bottom:30px; color:#ccc;">Welcome to Our Little Love Story ❤️</p>
+                <a href="#letter" class="btn-premium">Mulai Perjalanan ❤️</a>
+            </div>
+        </header>
+
+        <!-- Letter -->
+        <section id="letter" class="section-padding">
+            <div class="container fade-in-scroll">
+                <h2 class="section-title">A Letter For You 💌</h2>
+                <div class="envelope-wrapper" id="envelope-wrapper">
+                    <div class="envelope">
+                        <div class="flap"></div>
+                        <div class="letter">
+                            <div class="letter-content">
+                                <p id="typed-text"></p>
+                            </div>
+                        </div>
+                        <div class="envelope-front"></div>
+                    </div>
+                    <p style="text-align:center; margin-top:30px; color:#aaa;" class="envelope-hint">Klik amplop untuk membuka</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why You -->
+        <section id="why-you" class="section-padding">
+            <div class="container">
+                <h2 class="section-title fade-in-scroll">Kenapa Kamu?</h2>
+                <div class="cards-container">
+                    <div class="why-card glass fade-in-scroll"><p>"Karena senyummu selalu berhasil membuat hariku lebih baik."</p></div>
+                    <div class="why-card glass fade-in-scroll"><p>"Karena bersamamu, hal sederhana terasa istimewa."</p></div>
+                    <div class="why-card glass fade-in-scroll"><p>"Karena kamu adalah kamu."</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Counter -->
+        <section id="counter" class="section-padding">
+            <div class="container fade-in-scroll">
+                <h2 class="section-title">Every Moment Matters</h2>
+                <p style="text-align:center; margin-bottom: 20px;">Since 17 Juli 2026</p>
+                <div class="counter-box">
+                    <div class="time-item"><span id="days" class="time-number">00</span><span>Days</span></div>
+                    <div class="time-item"><span id="hours" class="time-number">00</span><span>Hours</span></div>
+                    <div class="time-item"><span id="minutes" class="time-number">00</span><span>Minutes</span></div>
+                    <div class="time-item"><span id="seconds" class="time-number">00</span><span>Secs</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="our-story" class="section-padding">
+            <div class="container">
+                <h2 class="section-title fade-in-scroll">Our Story</h2>
+                <div class="timeline" id="timeline-container">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Surprise -->
+        <section id="surprise" class="section-padding" style="text-align:center;">
+            <div class="container fade-in-scroll">
+                <button id="surprise-btn" class="btn-premium">Klik untuk Kejutan Terakhir ❤️</button>
+                <h1 id="surprise-text" class="hidden" style="font-size:3rem; margin-top:20px; color:var(--soft-pink);">YOU ARE MY FAVORITE PERSON ❤️</h1>
+            </div>
+        </section>
+
+        <footer style="text-align:center; padding:30px; border-top:1px solid var(--glass-border); margin-top:50px;">
+            <p>Made with love, for Zire. ❤️</p>
+        </footer>
+
+        <!-- Music Player -->
+        <div class="glass-player">
+            <!-- Pastikan file shape-of-my-heart.mp3 ada di folder yang sama -->
+            <audio id="bg-music" loop>
+                <source src="shape-of-my-heart.mp3" type="audio/mpeg">
+            </audio>
+            <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+            <div class="player-info">Our song ❤️</div>
+        </div>
+
+    </div>
+
+    <script>
+        /* === KUMPULAN JAVASCRIPT === */
+        
+        // Data
+        const relationDate = "2026-07-17T00:00:00";
+        const timelineData = [
+            { date: "Awal", title: "First Meeting", desc: "Hari dimana semuanya dimulai." },
+            { date: "Momen", title: "First Conversation", desc: "Percakapan pertama kita yang penuh makna." },
+            { date: "Sekarang", title: "Today", desc: "Aku bersyukur memilikimu." }
+        ];
+
+        // Opening & Music
+        document.getElementById("open-gift-btn").addEventListener("click", () => {
+            document.getElementById("opening-screen").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("opening-screen").classList.add("hidden");
+                document.getElementById("main-content").classList.remove("hidden");
+                document.getElementById("bg-music").play().catch(() => console.log("Auto-play diblokir browser"));
+                document.getElementById("play-pause-btn").innerHTML = '<i class="fas fa-pause"></i>';
+            }, 1000);
+        });
+
+        // Music Controls
+        const bgMusic = document.getElementById("bg-music");
+        const playBtn = document.getElementById("play-pause-btn");
+        playBtn.addEventListener("click", () => {
+            if (bgMusic.paused) { bgMusic.play(); playBtn.innerHTML = '<i class="fas fa-pause"></i>'; } 
+            else { bgMusic.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
+        });
+
+        // Inject Timeline
+        const tlContainer = document.getElementById("timeline-container");
+        timelineData.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "timeline-item fade-in-scroll";
+            div.innerHTML = `<div class="timeline-content glass"><p style="color:var(--soft-pink); font-size:0.8rem;">${item.date}</p><h3 style="margin:5px 0;">${item.title}</h3><p style="font-size:0.9rem;">${item.desc}</p></div>`;
+            tlContainer.appendChild(div);
+        });
+
+        // Envelope Typing Animation
+        const envelope = document.getElementById("envelope-wrapper");
+        const typedText = document.getElementById("typed-text");
+        let opened = false;
+        const surat = "Sayangku, \n\nTerima kasih sudah hadir dalam hidupku. Terima kasih untuk setiap senyum, perhatian, dan momen kecil yang mungkin terlihat sederhana, tapi selalu berarti bagiku.\n\nAku sayang kamu.\nDan aku bersyukur kamu ada. ❤️";
+        
+        envelope.addEventListener("click", () => {
+            if(!opened) {
+                envelope.classList.add("open");
+                document.querySelector(".envelope-hint").style.display = "none";
+                opened = true;
+                setTimeout(() => {
+                    let i = 0;
+                    function type() {
+                        if (i < surat.length) {
+                            typedText.innerHTML += surat.charAt(i);
+                            i++;
+                            setTimeout(type, 30);
+                        }
+                    }
+                    type();
+                }, 1000);
+            }
+        });
+
+        // Counter
+        setInterval(() => {
+            const diff = new Date().getTime() - new Date(relationDate).getTime();
+            if(diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+
+        // Surprise
+        document.getElementById("surprise-btn").addEventListener("click", (e) => {
+            e.target.style.display = "none";
+            document.getElementById("surprise-text").classList.remove("hidden");
+            document.body.style.background = "linear-gradient(135deg, var(--burgundy), var(--rose))";
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add("visible");
+            });
+        });
+        document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
